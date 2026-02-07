@@ -373,30 +373,49 @@ function endGame() {
     updateLeaderboardDisplay(); // Update display for next time
 }
 
-// Leaderboard Logic
+// Leaderboard Logic (Firebase)
 function saveScore(newScore) {
     const name = nameInput.value.trim() || "익명";
-    let scores = JSON.parse(localStorage.getItem('fallingFruitScores')) || [];
 
-    scores.push({ name: name, score: newScore });
-    scores.sort((a, b) => b.score - a.score); // Sort descending
-    scores = scores.slice(0, 5); // Keep top 5
-
-    localStorage.setItem('fallingFruitScores', JSON.stringify(scores));
+    // Add a new document with a generated id.
+    db.collection("leaderboard").add({
+        name: name,
+        score: newScore,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp() // For tie-breaking or recent views
+    })
+        .then((docRef) => {
+            console.log("Score written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+            console.error("Error adding score: ", error);
+        });
 }
 
 function updateLeaderboardDisplay() {
-    let scores = JSON.parse(localStorage.getItem('fallingFruitScores')) || [];
+    // Real-time listener
+    // Limit to top 5, ordered by score desc
+    db.collection("leaderboard")
+        .orderBy("score", "desc")
+        .limit(5)
+        .onSnapshot((querySnapshot) => {
+            const scores = [];
+            querySnapshot.forEach((doc) => {
+                scores.push(doc.data());
+            });
 
-    // Fill up to 5 if empty
-    while (scores.length < 5) {
-        scores.push({ name: "???", score: 0 });
-    }
+            // Fill up to 5 if empty (visual placeholder)
+            while (scores.length < 5) {
+                scores.push({ name: "???", score: 0 });
+            }
 
-    leaderboardList.innerHTML = scores.map((s, i) =>
-        `<li>${i + 1}. ${s.name} - ${s.score}점</li>`
-    ).join('');
+            leaderboardList.innerHTML = scores.map((s, i) =>
+                `<li>${i + 1}. ${s.name} - ${s.score}점</li>`
+            ).join('');
+        });
 }
+
+// Initialize leaderboard listener immediately
+updateLeaderboardDisplay();
 
 // Load saved name
 const savedName = localStorage.getItem('lastPlayerName');
