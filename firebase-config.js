@@ -1,12 +1,12 @@
 // Firebase Configuration
-// TODO: Replace with your project's config object from Firebase Console -> Project Settings -> General -> Your apps
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCapeQviTPJYzG9WFFHx7tGcRFyLRaly2k",
+    authDomain: "falling-fruit-game.firebaseapp.com",
+    projectId: "falling-fruit-game",
+    storageBucket: "falling-fruit-game.firebasestorage.app",
+    messagingSenderId: "894553766409",
+    appId: "1:894553766409:web:6c79604f5c546eab5656d8",
+    measurementId: "G-B501SRV518"
 };
 
 // Initialize Firebase

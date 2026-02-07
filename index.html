@@ -15,55 +15,81 @@
 
         <div id="ui-layer">
             <div id="hud">
-                <div class="score-board">🍎 점수: <span id="score">0</span> / <span id="target-score">100</span></div>
-                <div class="level-board">⭐ 레벨: <span id="level">1</span></div>
-                <div class="lives-board">❤️ 생명: <span id="lives">3</span></div>
+                <div class="stat-pill score-pill">
+                    <span class="stat-icon">🍎</span>
+                    <div class="stat-content">
+                        <span class="stat-label">점수</span>
+                        <span class="stat-value"><span id="score">0</span>/<span id="target-score">100</span></span>
+                    </div>
+                </div>
+                <div class="stat-pill level-pill">
+                    <span class="stat-icon">⭐</span>
+                    <div class="stat-content">
+                        <span class="stat-label">레벨</span>
+                        <span class="stat-value" id="level">1</span>
+                    </div>
+                </div>
+                <div class="stat-pill lives-pill">
+                    <span class="stat-icon">❤️</span>
+                    <div class="stat-content">
+                        <span class="stat-label">생명</span>
+                        <span class="stat-value" id="lives">3</span>
+                    </div>
+                </div>
+                <div class="stat-pill tier-pill">
+                    <span class="stat-icon">🏅</span>
+                    <div class="stat-content">
+                        <span class="stat-label">티어</span>
+                        <span class="stat-value" id="tier">브론즈</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Mobile Controls Removed as per request -->
-
-            <div id="start-screen" class="screen">
-                <h1>🍎 과일 받기 대작전! 🍌</h1>
-                <p>바구니를 움직여 맛있는 과일을 받아주세요!</p>
-
-                <div class="input-group">
-                    <input type="text" id="player-name" placeholder="이름을 입력하세요" maxlength="8">
-                </div>
-
-                <div class="goal-box">
-                    <p>🚩 1단계 목표: <span id="start-goal">150</span>점</p>
-                    <p class="sub-text">(폭탄은 2단계부터 나와요!)</p>
-                </div>
-
-                <div id="leaderboard">
-                    <h3>🏆 명예의 전당 🏆</h3>
-                    <ul id="leaderboard-list">
-                        <!-- Rank items will be injected here -->
-                        <li>1. ??? - 0점</li>
-                        <li>2. ??? - 0점</li>
-                        <li>3. ??? - 0점</li>
-                        <li>4. ??? - 0점</li>
-                        <li>5. ??? - 0점</li>
-                    </ul>
-                </div>
-
-                <p class="instruction">화면을 터치하거나 드래그해서 이동!</p>
-                <button id="start-btn" class="btn">게임 시작</button>
-            </div>
-
-            <div id="stage-clear-screen" class="screen hidden">
-                <h1>🎉 스테이지 클리어! 🎉</h1>
-                <p>대단해요! 다음 단계로 넘어갈까요?</p>
-                <button id="next-level-btn" class="btn">다음 레벨 도전!</button>
-            </div>
-
-            <div id="game-over-screen" class="screen hidden">
-                <h1>게임 종료! 😢</h1>
-                <p>최종 점수: <span id="final-score">0</span>점</p>
-                <button id="restart-btn" class="btn">다시 하기</button>
+            <div id="combo-container" class="hidden">
+                <span id="combo-count">0</span> COMBO!
             </div>
         </div>
+
+        <!-- Mobile Controls Removed as per request -->
+
+        <div id="start-screen" class="screen">
+            <h1>🍎 과일 받기 대작전! 🍌</h1>
+            <p>바구니를 움직여 맛있는 과일을 받아주세요!</p>
+
+            <div class="input-group">
+                <input type="text" id="player-name" placeholder="이름을 입력하세요" maxlength="8">
+            </div>
+
+            <div class="goal-box">
+                <p>🚩 1단계 목표: <span id="start-goal">150</span>점</p>
+                <p class="sub-text">(폭탄은 2단계부터 나와요!)</p>
+            </div>
+
+            <div id="leaderboard">
+                <h3>🏆 명예의 전당 🏆</h3>
+                <ul id="leaderboard-list">
+                    <!-- Rank items will be injected here -->
+                    <li>1. ??? - 0점</li>
+                    <li>2. ??? - 0점</li>
+                    <li>3. ??? - 0점</li>
+                    <li>4. ??? - 0점</li>
+                    <li>5. ??? - 0점</li>
+                </ul>
+            </div>
+
+            <p class="instruction">화면을 터치하거나 드래그해서 이동!</p>
+            <button id="start-btn" class="btn">게임 시작</button>
+        </div>
+
+
+
+        <div id="game-over-screen" class="screen hidden">
+            <h1>게임 종료! 😢</h1>
+            <p>최종 점수: <span id="final-score">0</span>점</p>
+            <button id="restart-btn" class="btn">다시 하기</button>
+        </div>
     </div>
+
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -73,6 +99,11 @@
 
     <!-- Firebase Config -->
     <script src="firebase-config.js"></script>
+
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script src="game.js"></script>
 </body>
