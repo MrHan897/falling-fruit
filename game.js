@@ -579,9 +579,15 @@ function updateLeaderboardDisplay() {
                 scores.push({ name: "???", score: 0 });
             }
 
-            leaderboardList.innerHTML = scores.map((s, i) =>
-                `<li>${i + 1}. ${s.name} - ${s.score}점</li>`
-            ).join('');
+            const fragment = document.createDocumentFragment();
+            scores.forEach((entry, index) => {
+                const item = document.createElement('li');
+                const safeName = typeof entry.name === 'string' ? entry.name.slice(0, 8) : '???';
+                const safeScore = Number.isFinite(Number(entry.score)) ? Number(entry.score) : 0;
+                item.textContent = `${index + 1}. ${safeName} - ${safeScore}점`;
+                fragment.appendChild(item);
+            });
+            leaderboardList.replaceChildren(fragment);
         });
 }
 
